@@ -88,6 +88,28 @@ string Object::toString(
 	return useSrcComment + "object \"" + name.str() + "\" {\n" + indent(inner) + "\n}";
 }
 
+string Object::toPrettyString(
+	Dialect const* _dialect,
+	DebugInfoSelection const& _debugInfoSelection,
+	CharStreamProvider const* _soliditySourceProvider
+) const
+{
+	yulAssert(code, "No code");
+	yulAssert(debugData, "No debug data");
+
+	string inner = AsmPrinter(
+		_dialect,
+		debugData->sourceNames,
+		_debugInfoSelection,
+		_soliditySourceProvider
+	)(*code);
+
+	for (auto const& obj: subObjects)
+		inner += "\n" + obj->toString(_dialect, _debugInfoSelection, _soliditySourceProvider);
+
+	return "{\n" + indent(inner) + "\n}";
+}
+
 set<YulString> Object::qualifiedDataNames() const
 {
 	set<YulString> qualifiedNames =

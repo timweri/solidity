@@ -96,6 +96,13 @@ public:
 		langutil::CharStreamProvider const* _soliditySourceProvider = nullptr
 	) const;
 
+	/// @returns a parsable string representation without semantic modification
+	std::string toPrettyString(
+		Dialect const* _dialect,
+		langutil::DebugInfoSelection const& _debugInfoSelection = langutil::DebugInfoSelection::Default(),
+		langutil::CharStreamProvider const* _soliditySourceProvider = nullptr
+	) const;
+
 	/// @returns the set of names of data objects accessible from within the code of
 	/// this object, including the name of object itself
 	/// Handles all names containing dots as reserved identifiers, not accessible as data.

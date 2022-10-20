@@ -49,3 +49,11 @@ add_executable(yul-phaser yulPhaser/main.cpp)
 target_link_libraries(yul-phaser PRIVATE phaser)
 
 install(TARGETS yul-phaser DESTINATION "${CMAKE_INSTALL_BINDIR}")
+
+set(libyulprettyprinter_sources
+	yulPrettyPrinter/yulPrettyPrinter.h
+	yulPrettyPrinter/yulPrettyPrinter.cpp
+)
+add_library(yulprettyprinter ${libyulprettyprinter_sources})
+target_link_libraries(yulprettyprinter PUBLIC solidity Boost::boost Boost::program_options)
+add_executable(yul-phaser yulPhaser/main.cpp)
